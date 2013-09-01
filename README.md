@@ -6,7 +6,7 @@ A maintainable and flexible password validator.
 
 ####How it works:
 
-The `PasswordValidator` class contains two regex lists, one for required rules and other for optional rules with a `minimumOptionalRulesToSatisfy` value. The password should match all required rules and some of the optional rules. 
+The `PasswordValidator` class contains two regex lists, one for required rules and other for optional rules with a `minimumOptionalRulesToSatisfy` value. The password should match (or not) all required rules and some of the optional rules. 
 
 
 ####Example:
@@ -24,7 +24,7 @@ bool isValid = passwordValidator.IsValid("Password", out errors);
 
 Simply add / remove / move around regexs to the required or optional regex lists. 
 
-Note: The password should match the regexs. Sometimes, you may want password to not match a regex and the inverse regex could be relatively complicated (ex: `NonRepeating` regex).
+You can also specify regexs that the password should NOT match (ex: `Repeating` regex).
 
 
 ####Regexs: 
@@ -32,7 +32,7 @@ Note: The password should match the regexs. Sometimes, you may want password to 
 Required (MUST satisfy):
 ```c#
 Length // 8-127
-NonRepeating // No more than 2 identical characters in a row
+~Repeating // NO 3 or more identical characters in a row
 ```
 Optional (should satisfy some):
 ```c#

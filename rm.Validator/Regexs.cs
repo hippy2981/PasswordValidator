@@ -18,5 +18,8 @@
         /// <summary>No more than 2 identical characters in a row regex.</summary>
         /// <remarks>http://stackoverflow.com/questions/16717656/regex-no-more-than-2-identical-consecutive-characters-and-a-z-and-0-9</remarks>
         public const string NonRepeating = @"^((.)\2?(?!\2))+$";
+        /// <summary>3 or more identical characters in a row regex.</summary>
+        /// <remarks>http://stackoverflow.com/questions/1660694/regular-expression-to-match-any-character-being-repeated-more-than-10-times</remarks>
+        public const string Repeating = @"(.)\1{2,}";
     }
 }

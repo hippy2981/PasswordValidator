@@ -11,14 +11,18 @@ namespace rm.Validator
         /// Regex's name.
         /// </summary>
         public string Name { get; private set; }
-        public RegEx(string pattern, string name, RegexOptions options = RegexOptions.Compiled)
+        public bool ExpectedMatch { get; private set; }
+        public RegEx(string pattern, string name, bool expectedMatch = true,
+            RegexOptions options = RegexOptions.Compiled)
             : base(pattern, options)
         {
             Name = name;
+            ExpectedMatch = expectedMatch;
         }
         public override string ToString()
         {
-            return string.Format("{0} ({1})", base.ToString(), Name);
+            return string.Format("{0} ({2}{1})", 
+                base.ToString(), Name, ExpectedMatch ? "" : "~");
         }
     }
 }

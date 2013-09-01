@@ -75,6 +75,7 @@ namespace rm.ValidatorTest
         [TestCase("$$", Regexs.NonRepeating)]
         [TestCase("00", Regexs.NonRepeating)]
         [TestCase("AA", Regexs.NonRepeating)]
+        //[TestCase("", Regexs.NonRepeating)]
         public void NonRepeating_True(string input, string regex)
         {
             Assert.IsTrue(Regex.Match(input, regex).Success);
@@ -89,6 +90,32 @@ namespace rm.ValidatorTest
         public void NonRepeating_False(string input, string regex)
         {
             Assert.IsFalse(Regex.Match(input, regex).Success);
+        }
+
+        [Test]
+        [TestCase("aa", Regexs.Repeating)]
+        [TestCase("aa0a", Regexs.Repeating)]
+        [TestCase("a0a0a", Regexs.Repeating)]
+        [TestCase("$$", Regexs.Repeating)]
+        [TestCase("00", Regexs.Repeating)]
+        [TestCase("AA", Regexs.Repeating)]
+        [TestCase("", Regexs.Repeating)]
+        [TestCase("  ", Regexs.Repeating)]
+        public void Repeating_False(string input, string regex)
+        {
+            Assert.IsFalse(Regex.Match(input, regex).Success);
+        }
+        [Test]
+        [TestCase("aaa", Regexs.Repeating)]
+        [TestCase("aaaa", Regexs.Repeating)]
+        [TestCase("aa0aaa", Regexs.Repeating)]
+        [TestCase("$$$", Regexs.Repeating)]
+        [TestCase("000", Regexs.Repeating)]
+        [TestCase("AAA", Regexs.Repeating)]
+        [TestCase("   ", Regexs.Repeating)]
+        public void Repeating_True(string input, string regex)
+        {
+            Assert.IsTrue(Regex.Match(input, regex).Success);
         }
     }
 }

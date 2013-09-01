@@ -17,7 +17,8 @@ namespace rm.Validator
         private static readonly RegEx[] requiredRegexs = 
         {
             new RegEx(Regexs.Length, "Length"),
-            new RegEx(Regexs.NonRepeating, "NonRepeating")
+            //new RegEx(Regexs.NonRepeating, "NonRepeating"),
+            new RegEx(Regexs.Repeating, "Repeating", false),
         };
         /// <summary>
         /// Optional rules that password should satisfy some.
@@ -27,7 +28,7 @@ namespace rm.Validator
             new RegEx(Regexs.LowerCase, "LowerCase"),
             new RegEx(Regexs.UpperCase, "UpperCase"),
             new RegEx(Regexs.Numeric, "Numeric"),
-            new RegEx(Regexs.Special, "Special")
+            new RegEx(Regexs.Special, "Special"),
         };
         /// <summary>
         /// Minimum optional rules (regexs) for password to satisfy (match).
@@ -78,14 +79,16 @@ namespace rm.Validator
             }
             var isValid = false;
             // required regexs
-            var requiredRegexsFlags = requiredRegexs.Select(x => x.IsMatch(password)).ToArray();
+            var requiredRegexsFlags = requiredRegexs
+                .Select(x => x.IsMatch(password) == x.ExpectedMatch).ToArray();
             var requiredRegexsCombinedFlag = true;
             foreach (var requiredRegexsFlag in requiredRegexsFlags)
             {
                 requiredRegexsCombinedFlag &= requiredRegexsFlag;
             }
             // optional regexs
-            var optionalRegexsFlags = optionalRegexs.Select(x => x.IsMatch(password)).ToArray();
+            var optionalRegexsFlags = optionalRegexs
+                .Select(x => x.IsMatch(password) == x.ExpectedMatch).ToArray();
             var optionalRegexsCombinedFlag = optionalRegexsFlags.Count(x => x) >= minimumOptionalRulesToSatisfy;
             // all required rules + atleast some of optional rules
             isValid = requiredRegexsCombinedFlag && optionalRegexsCombinedFlag;

@@ -22,12 +22,12 @@ namespace rm.ValidatorTest
         {
             IEnumerable<string> errors;
             Assert.IsTrue(passwordValidator.IsValid(password, out errors));
-            Assert.AreEqual(0, errors.Count());
             PrintErrors(password, errors);
+            Assert.AreEqual(0, errors.Count());
         }
         [Test]
         [TestCase((string)null, 6)]
-        [TestCase("", 6)]
+        [TestCase("", 5)]
         [TestCase("Passw0rdPassw0rdPassw0rdPassw0rdPassw0rdPassw0rdPassw0rdPassw0rdPassw0rdPassw0rdPassw0rdPassw0rdPassw0rdPassw0rdPassw0rdPassw0rd", 1)]
         [TestCase("Password", 2)]
         [TestCase("password", 3)]
@@ -37,8 +37,8 @@ namespace rm.ValidatorTest
         {
             IEnumerable<string> errors;
             Assert.IsFalse(passwordValidator.IsValid(password, out errors));
-            Assert.AreEqual(errorsCount, errors.Count());
             PrintErrors(password, errors);
+            Assert.AreEqual(errorsCount, errors.Count());
         }
 
         private void PrintErrors(string password, IEnumerable<string> errors)
